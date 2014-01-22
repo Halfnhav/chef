@@ -299,8 +299,8 @@ class Chef
       end
       # We now have the client key, and should use it from now on.
       #create run_id in client that gets threaded along as a part of the run_status.
-      @run_id = SecureRandom.uuid
-      @rest = Chef::REST.new(config[:chef_server_url], client_name, config[:client_key], {:run_id => @run_id})
+      @run_id = Chef::RunId.instance.run_id#SecureRandom.uuid
+      @rest = Chef::REST.new(config[:chef_server_url], client_name, config[:client_key])#, {:run_id => @run_id})
       @resource_reporter = Chef::ResourceReporter.new(@rest)
       @events.register(@resource_reporter)
     rescue Exception => e
